@@ -1,5 +1,7 @@
 package deengames.incrementalwar.model;
 
+import helix.data.Config;
+
 class Earth
 {
     public var regions(default, null):Array<Region>;
@@ -11,7 +13,11 @@ class Earth
         Earth.instance = this;
         this.regions = new Array<Region>();
 
-        this.currentRegion = new Region();
+        var startingCosts:Array<Int> = Config.get("startingResources");
+        var alloy = startingCosts[0];
+        var neodymium = startingCosts[1];
+
+        this.currentRegion = new Region(alloy, neodymium);
         this.regions.push(this.currentRegion);
     }
 

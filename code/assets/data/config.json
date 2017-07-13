@@ -1,0 +1,8 @@
+{
+    "startingResources": [500, 100],
+    
+    // all costs are an array of [alloy, neodymium]
+    "buildingCosts": {        
+        "neodymiumElectricGenerator": [500, 100]
+    }
+}

@@ -23,14 +23,16 @@ class Region
     // Returns true if bought, false if insufficient funds
     public function buyNeydymiumElectricGenerator():Bool
     {
-        var costs:Dynamic = Config.get("buildingCosts");
-        var buildingCosts:Array<Int> = costs.neodymiumElectricGenerator;
-        if (numAlloy >= buildingCosts[0] && numNeodymium >= buildingCosts[1])
+        var buildingsData:Dynamic = Config.get("buildings");
+        var negData:Dynamic = buildingsData.neodymiumElectricGenerator;
+        var alloyCost:Int = negData.alloyCost;
+        var neodymiumCost:Int = negData.neodymiumCost;
+        if (numAlloy >= alloyCost  && numNeodymium >= neodymiumCost)
         {
             // CHA-CHING!
             this.numNeodymiumElectricGenerators++;
-            numAlloy -= buildingCosts[0];
-            numNeodymium -= buildingCosts[1];
+            numAlloy -= alloyCost;
+            numNeodymium -= neodymiumCost;
             return true;
         }
         
@@ -39,5 +41,8 @@ class Region
 
     public function update(elapsedSeconds:Float):Void
     {
+        var buildingsData:Dynamic = Config.get("buildings");
+        var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;
+        this.numEnergy += this.numNeodymiumElectricGenerators * negEnergyPerSecond * elapsedSeconds;
     }
 }

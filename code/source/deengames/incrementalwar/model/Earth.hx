@@ -12,7 +12,6 @@ class Earth
         this.regions = new Array<Region>();
 
         this.currentRegion = new Region();
-        this.currentRegion.setupFirstRegionEver();
         this.regions.push(this.currentRegion);
     }
 

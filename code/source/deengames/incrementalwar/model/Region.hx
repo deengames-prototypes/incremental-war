@@ -16,9 +16,4 @@ class Region
     public function update(elapsedSeconds:Float):Void
     {
     }
-
-    public function setupFirstRegionEver():Void
-    {
-        this.energyHarvested = 500;
-    }
 }

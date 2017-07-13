@@ -10,8 +10,10 @@ class Earth
     {
         Earth.instance = this;
         this.regions = new Array<Region>();
-        this.regions.push(new Region());
-        this.currentRegion = this.regions[0];
+
+        this.currentRegion = new Region();
+        this.currentRegion.setupFirstRegionEver();
+        this.regions.push(this.currentRegion);
     }
 
     public function update(elapsedSeconds:Float):Void

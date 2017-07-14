@@ -21,7 +21,8 @@ class CoreGameState extends HelixState
 	private var energyDisplay:HelixText;
 	private var alloyDisplay:HelixText;
 	private var neodymiumDisplay:HelixText;
-
+	// units
+	private var numAlloyHarvestersDisplay:HelixText;
 	// buildings
 	private var neodymiumElectricGeneratorsDisplay:HelixText;
 
@@ -67,6 +68,10 @@ class CoreGameState extends HelixState
 		this.neodymiumDisplay = new HelixText(0, Std.int(this.alloyDisplay.y + this.alloyDisplay.fontSize + UI_PADDING), "Neodymium: 9999", UI_FONT_SIZE);
 		this.neodymiumDisplay.x = this.width - this.neodymiumDisplay.width - UI_PADDING;
 
+		// UI: units
+		this.numAlloyHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, "Alloy Harvesters: 0", UI_FONT_SIZE);
+		this.numAlloyHarvestersDisplay.alpha = 0;
+
 		// UI: buildings
 		this.neodymiumElectricGeneratorsDisplay = new HelixText(UI_PADDING, 0, "NEGs: 0", UI_FONT_SIZE);
 		this.neodymiumElectricGeneratorsDisplay.y = this.height - this.neodymiumElectricGeneratorsDisplay.height - UI_PADDING;
@@ -87,6 +92,7 @@ class CoreGameState extends HelixState
 			{
 				this.earth.player.discover(Discovery.AlloyHarvester);
 				this.buyAlloyHarvester.alpha = 1;
+				this.numAlloyHarvestersDisplay.alpha = 1;
 			}
 		});
 
@@ -103,6 +109,7 @@ class CoreGameState extends HelixState
 			var bought = this.region.buyAlloyHarvester();
 			if (bought)
 			{
+				this.numAlloyHarvestersDisplay.text = 'Alloy harvesters: ${this.region.numAlloyHarvesters}';
 				// Play cash sound
 				if (this.mineNeodymiumManually.alpha == 0 && 
 				!this.earth.player.isDiscovered(Discovery.ManuallyMineNeodymium) &&
@@ -110,7 +117,7 @@ class CoreGameState extends HelixState
 				{
 					this.earth.player.discover(Discovery.ManuallyMineNeodymium);
 					this.mineNeodymiumManually.alpha = 1;
-				}
+				}				
 			}
 			else
 			{

@@ -112,6 +112,7 @@ class CoreGameState extends HelixState
 				{
 					this.earth.player.discover(Discovery.NeodymiumHarvester);
 					this.buyNeodymiumHarvester.alpha = 1;
+					this.numNeodymiumHarvestersDisplay.alpha = 1;
 				}
 		});
 
@@ -145,7 +146,7 @@ class CoreGameState extends HelixState
 			var bought = this.region.buyNeodymiumHarvester();
 			if (bought)
 			{
-				this.numNeodymiumHarvestersDisplay.text = 'Neodymium harvesters: ${this.region.numNeodymiumHarvesters}';
+				this.numNeodymiumHarvestersDisplay.text = 'NeoD harvesters: ${this.region.numNeodymiumHarvesters}';
 				// Play cash sound			
 			}
 			else

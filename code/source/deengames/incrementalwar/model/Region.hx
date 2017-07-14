@@ -18,6 +18,9 @@ class Region
     // Buildings.
     public var numNeodymiumElectricGenerators(default, null):Int = 0;
 
+    // Units
+    public var numAlloyHarvesters(default, null):Int = 0;
+
     public function new(startingAlloy:Int = 0, startingNeodymium:Int = 0)
     {
         this.numAlloy = startingAlloy;
@@ -37,6 +40,21 @@ class Region
             this.numNeodymiumElectricGenerators++;
             numAlloy -= alloyCost;
             numNeodymium -= neodymiumCost;
+            return true;
+        }
+        
+        return false;
+    }
+
+    public function buyAlloyHarvester():Bool
+    {
+        var unitsData:Dynamic = Config.get("units");
+        var alloyCost:Int = unitsData.alloyHarvester.alloyCost;
+        if (numAlloy >= alloyCost)
+        {
+            // CHA-CHING!
+            this.numAlloyHarvesters++;
+            numAlloy -= alloyCost;
             return true;
         }
         

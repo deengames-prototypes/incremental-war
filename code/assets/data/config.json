@@ -1,5 +1,14 @@
 {
     "startingResources": [500, 100],
+
+    "discoveries": {
+        "alloyHarvester": {
+            "alloyCost": 10
+        },
+        "mineAlloy": {
+            "energyPerSecondRequirement": 1
+        }
+    },
     
     // all costs are an array of [alloy, neodymium]
     "buildings": {        
@@ -7,6 +16,13 @@
             "alloyCost": 500,
             "neodymiumCost": 100,
             "energyGeneratedPerSecond": 10
+        }
+    },
+
+    "units": {
+        "alloyHarvester": {
+            "alloyCost": 10,
+            "energyDrainPerSecond": 1
         }
     }
 }

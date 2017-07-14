@@ -2,10 +2,12 @@ package deengames.incrementalwar.model;
 
 import helix.data.Config;
 
+// Contains units, buildings (attack and defense), perhaps enemies, energy
 class Region
 {
-    // Contains units, buildings (attack and defense), perhaps enemies, energy
-
+    // May eventually grow to be more per click
+    private static inline var MANUAL_ALLOY_MINED_PER_CLICK:Int = 1;
+    
     // Resources. Stored as floats but displayed as ints
     public var numAlloy(default, null):Float = 0;
     public var numNeodymium(default, null):Float = 0;
@@ -39,6 +41,11 @@ class Region
         }
         
         return false;
+    }
+
+    public function mineAlloyManually():Void
+    {
+        this.numAlloy += MANUAL_ALLOY_MINED_PER_CLICK;
     }
 
     public function update(elapsedSeconds:Float):Void

@@ -17,6 +17,7 @@ class Region
 
     // Units
     public var numAlloyHarvesters(default, null):Int = 0;
+    public var numNeodymiumHarvesters(default, null):Int = 0;
 
     public function new(startingAlloy:Int = 0, startingNeodymium:Int = 0)
     {
@@ -58,6 +59,23 @@ class Region
         return false;
     }
 
+    public function buyNeodymiumHarvester():Bool
+    {
+        var unitsData:Dynamic = Config.get("units");
+        var alloyCost:Int = unitsData.neodymiumHarvester.alloyCost;
+        var neodymiumCost:Int = unitsData.neodymiumHarvester.neodymiumCost;
+        if (numAlloy >= alloyCost && numNeodymium > neodymiumCost)
+        {
+            // CHA-CHING!
+            this.numNeodymiumHarvesters++;
+            numAlloy -= alloyCost;
+            numNeodymium -= neodymiumCost;
+            return true;
+        }
+        
+        return false;
+    }
+
     public function mineAlloyManually():Void
     {
         var alloyGained:Int = Config.get("manualAlloyMinedPerClick");
@@ -80,6 +98,8 @@ class Region
 
         // Update alloy mined
         this.numAlloy += this.numAlloyHarvesters * unitsConfig.alloyHarvester.alloyMinedPerSecond * elapsedSeconds;
+        // Update neodymium mined
+        this.numNeodymium += this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.neodymiumMinedPerSecond * elapsedSeconds;
     }
 
     private function get_energyGainPerSecond():Float
@@ -91,8 +111,12 @@ class Region
         var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;        
         var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
 
-        // Energy lost per harvester
-        var harvesterCost:Float = this.numAlloyHarvesters * unitsConfig.alloyHarvester.energyDrainPerSecond;        
-        return toReturn - harvesterCost;
+        //// Energy lost per unit
+        // Alloy harvesters
+        var alloyHarvesterCost:Float = this.numAlloyHarvesters * unitsConfig.alloyHarvester.energyDrainPerSecond;        
+        // Neodymium harvesters
+        var neodymiumHarvesterCost:Float = this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.energyDrainPerSecond;
+
+        return toReturn - alloyHarvesterCost - neodymiumHarvesterCost;
     }
 }

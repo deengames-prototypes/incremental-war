@@ -3,6 +3,7 @@
     "manualAlloyMinedPerClick": 1,
     "manualNeodymiumMinedPerClick": 1,
 
+    // chronologically listed
     "discoveries": {
         "alloyHarvester": {
             "alloyCost": 10
@@ -12,6 +13,9 @@
         },
         "mineNeodymium": {
             "alloyHarvestersRequired": 3
+        },
+        "neodymiumHarvester": {
+            "neodymiumRequired": 10
         }
     },
     
@@ -29,6 +33,12 @@
             "alloyCost": 10,
             "energyDrainPerSecond": 1,
             "alloyMinedPerSecond": 1
+        },
+        "neodymiumHarvester": {
+            "alloyCost": 10,
+            "neodymiumCost": 10,
+            "energyDrainPerSecond": 1,
+            "neodymiumMinedPerSecond": 1
         }
     }
 }

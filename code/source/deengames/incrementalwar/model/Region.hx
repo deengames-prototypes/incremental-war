@@ -5,15 +5,12 @@ import helix.data.Config;
 // Contains units, buildings (attack and defense), perhaps enemies, energy
 class Region
 {
-    // May eventually grow to be more per click
-    private static inline var MANUAL_ALLOY_MINED_PER_CLICK:Int = 1;
-    
     // Resources. Stored as floats but displayed as ints
     public var numAlloy(default, null):Float = 0;
     public var numNeodymium(default, null):Float = 0;
     public var numEnergy(default, null):Float = 0;
 
-    public var energyGainPerSecond(get, null):Int;
+    public var energyGainPerSecond(get, null):Float;
 
     // Buildings.
     public var numNeodymiumElectricGenerators(default, null):Int = 0;
@@ -63,19 +60,33 @@ class Region
 
     public function mineAlloyManually():Void
     {
-        this.numAlloy += MANUAL_ALLOY_MINED_PER_CLICK;
+        var alloyGained:Int = Config.get("manualAlloyMinedPerClick");
+        this.numAlloy += alloyGained;
     }
 
     public function update(elapsedSeconds:Float):Void
     {
-        this.numEnergy += this.energyGainPerSecond * elapsedSeconds;
+        var unitsConfig:Dynamic = Config.get("units");
+
+        // Update energy gain/loss
+        var gained:Float = this.energyGainPerSecond;
+        this.numEnergy += gained * elapsedSeconds;
+
+        // Update alloy mined
+        this.numAlloy += this.numAlloyHarvesters * unitsConfig.alloyHarvester.alloyMinedPerSecond * elapsedSeconds;
     }
 
-    private function get_energyGainPerSecond():Int
+    private function get_energyGainPerSecond():Float
     {
+        var unitsConfig:Dynamic = Config.get("units");
+        
+        // Energy gain from energy-producing NEGs
         var buildingsData:Dynamic = Config.get("buildings");
         var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;        
         var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
-        return toReturn;
+
+        // Energy lost per harvester
+        var harvesterCost:Float = this.numAlloyHarvesters * unitsConfig.alloyHarvester.energyDrainPerSecond;        
+        return toReturn - harvesterCost;
     }
 }

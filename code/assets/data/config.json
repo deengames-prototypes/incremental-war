@@ -1,5 +1,6 @@
 {
     "startingResources": [500, 100],
+    "manualAlloyMinedPerClick": 1,
 
     "discoveries": {
         "alloyHarvester": {
@@ -22,7 +23,8 @@
     "units": {
         "alloyHarvester": {
             "alloyCost": 10,
-            "energyDrainPerSecond": 1
+            "energyDrainPerSecond": 1,
+            "alloyMinedPerSecond": 1
         }
     }
 }

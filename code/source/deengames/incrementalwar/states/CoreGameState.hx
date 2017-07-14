@@ -50,10 +50,8 @@ class CoreGameState extends HelixState
 
 	private function createUi():Void
 	{
-		// Expectation: four digits max, eg. 1.1M, 1.7B
 		// UI: resources
 		this.energyDisplay = this.addText(0, UI_PADDING, "Energy: 9999", UI_FONT_SIZE);
-		this.energyDisplay.x = this.width - this.energyDisplay.width - UI_PADDING;
 
 		this.alloyDisplay = this.addText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), "Alloy: 9999", UI_FONT_SIZE);
 		this.alloyDisplay.x = this.width - this.alloyDisplay.width - UI_PADDING;
@@ -85,7 +83,10 @@ class CoreGameState extends HelixState
 
 	private function updateUi():Void
 	{
-		this.energyDisplay.text = 'Energy: ${Std.int(Math.floor(this.region.numEnergy))}';
+		this.energyDisplay.text = 'Energy: ${Std.int(Math.floor(this.region.numEnergy))} (+${this.region.energyGainPerSecond}/s)';
+		this.energyDisplay.x = this.width - this.energyDisplay.width - UI_PADDING;
+
+
 		this.alloyDisplay.text = 'Alloy: ${Std.int(Math.floor(this.region.numAlloy))}';
 		this.neodymiumDisplay.text = 'Neodymium: ${Std.int(Math.floor(this.region.numNeodymium))}';
 	}

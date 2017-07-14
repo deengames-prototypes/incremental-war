@@ -11,6 +11,8 @@ class Region
     public var numNeodymium(default, null):Float = 0;
     public var numEnergy(default, null):Float = 0;
 
+    public var energyGainPerSecond(get, null):Int;
+
     // Buildings.
     public var numNeodymiumElectricGenerators(default, null):Int = 0;
 
@@ -41,8 +43,14 @@ class Region
 
     public function update(elapsedSeconds:Float):Void
     {
+        this.numEnergy += this.energyGainPerSecond * elapsedSeconds;
+    }
+
+    private function get_energyGainPerSecond():Int
+    {
         var buildingsData:Dynamic = Config.get("buildings");
-        var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;
-        this.numEnergy += this.numNeodymiumElectricGenerators * negEnergyPerSecond * elapsedSeconds;
+        var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;        
+        var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
+        return toReturn;
     }
 }

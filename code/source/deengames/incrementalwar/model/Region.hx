@@ -64,6 +64,12 @@ class Region
         this.numAlloy += alloyGained;
     }
 
+    public function mineNeodymiumManually():Void
+    {
+        var neodymiumGained:Int = Config.get("manualNeodymiumMinedPerClick");
+        this.numNeodymium += neodymiumGained;
+    }
+
     public function update(elapsedSeconds:Float):Void
     {
         var unitsConfig:Dynamic = Config.get("units");

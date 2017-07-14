@@ -1,6 +1,7 @@
 {
     "startingResources": [500, 100],
     "manualAlloyMinedPerClick": 1,
+    "manualNeodymiumMinedPerClick": 1,
 
     "discoveries": {
         "alloyHarvester": {
@@ -8,6 +9,9 @@
         },
         "mineAlloy": {
             "energyPerSecondRequirement": 1
+        },
+        "mineNeodymium": {
+            "alloyHarvestersRequired": 3
         }
     },
     

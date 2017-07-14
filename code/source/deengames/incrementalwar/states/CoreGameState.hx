@@ -28,6 +28,7 @@ class CoreGameState extends HelixState
 	//// UI elements (control)
 	private var buyNeodymiumElectricGenerator:HelixText;
 	private var mineAlloyManually:HelixText;
+	private var mineNeodymiumManually:HelixText;
 	// TODO: rename to fit world
 	private var buyAlloyHarvester:HelixText;
 
@@ -71,7 +72,7 @@ class CoreGameState extends HelixState
 		this.neodymiumElectricGeneratorsDisplay.y = this.height - this.neodymiumElectricGeneratorsDisplay.height - UI_PADDING;
 		
 		// UI: controls/buttons
-		this.buyAlloyHarvester = new HelixText(UI_PADDING, 0, "Buy alloy harvester", UI_ACTION_FONT_SIZE);
+		this.buyAlloyHarvester = new HelixText(0, 0, "Buy alloy harvester", UI_ACTION_FONT_SIZE);
 		this.buyAlloyHarvester.alpha = 0;
 
 		this.mineAlloyManually = new HelixText(UI_PADDING, UI_PADDING, "Mine Alloy", UI_ACTION_FONT_SIZE);
@@ -89,13 +90,27 @@ class CoreGameState extends HelixState
 			}
 		});
 
-		this.buyAlloyHarvester.y = mineAlloyManually.y + mineAlloyManually.fontSize + UI_PADDING;
+		this.mineNeodymiumManually = new HelixText(UI_PADDING, Std.int(this.mineAlloyManually.y) + this.mineAlloyManually.fontSize + UI_PADDING, "Mine Neodymium", UI_ACTION_FONT_SIZE);
+		this.mineNeodymiumManually.alpha = 0;
+		this.mineNeodymiumManually.onClick(function() {
+			this.region.mineNeodymiumManually();
+		});
+
+		this.buyAlloyHarvester.x = (this.width - this.buyAlloyHarvester.width) / 2;
+		this.buyAlloyHarvester.y = mineAlloyManually.y;
 		this.buyAlloyHarvester.onClick(function()
 		{
 			var bought = this.region.buyAlloyHarvester();
 			if (bought)
 			{
-				
+				// Play cash sound
+				if (this.mineNeodymiumManually.alpha == 0 && 
+				!this.earth.player.isDiscovered(Discovery.ManuallyMineNeodymium) &&
+				 this.region.numAlloyHarvesters >= discoveriesData.mineNeodymium.alloyHarvestersRequired)
+				{
+					this.earth.player.discover(Discovery.ManuallyMineNeodymium);
+					this.mineNeodymiumManually.alpha = 1;
+				}
 			}
 			else
 			{

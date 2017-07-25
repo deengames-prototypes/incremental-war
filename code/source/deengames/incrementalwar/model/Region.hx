@@ -64,7 +64,7 @@ class Region
         var unitsData:Dynamic = Config.get("units");
         var alloyCost:Int = unitsData.neodymiumHarvester.alloyCost;
         var neodymiumCost:Int = unitsData.neodymiumHarvester.neodymiumCost;
-        if (numAlloy >= alloyCost && numNeodymium > neodymiumCost)
+        if (numAlloy >= alloyCost && numNeodymium >= neodymiumCost)
         {
             // CHA-CHING!
             this.numNeodymiumHarvesters++;
@@ -111,7 +111,7 @@ class Region
         var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;        
         var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
 
-        //// Energy lost per unit
+        //// Energy lost per building
         // Alloy harvesters
         var alloyHarvesterCost:Float = this.numAlloyHarvesters * unitsConfig.alloyHarvester.energyDrainPerSecond;        
         // Neodymium harvesters

@@ -74,7 +74,7 @@ class CoreGameState extends HelixState
 		this.numAlloyHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, "Alloy Harvesters: 0", UI_FONT_SIZE);
 		this.numAlloyHarvestersDisplay.alpha = 0;
 
-		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numAlloyHarvestersDisplay.x), Std.int(this.numAlloyHarvestersDisplay.y) + numAlloyHarvestersDisplay.fontSize + UI_PADDING, "Neodymium Harvesters: 0", UI_FONT_SIZE);
+		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numAlloyHarvestersDisplay.x), Std.int(this.numAlloyHarvestersDisplay.y) + numAlloyHarvestersDisplay.fontSize + UI_PADDING, "NeoD Harvesters: 0", UI_FONT_SIZE);
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings

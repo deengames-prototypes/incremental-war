@@ -6,6 +6,7 @@ import deengames.incrementalwar.model.Region;
 import helix.core.HelixState;
 import helix.core.HelixText;
 import helix.data.Config;
+import polyglot.Translater;
 
 class CoreGameState extends HelixState
 {
@@ -78,7 +79,7 @@ class CoreGameState extends HelixState
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings
-		this.neodymiumElectricGeneratorsDisplay = new HelixText(UI_PADDING, 0, "NEGs: 0", UI_FONT_SIZE);
+		this.neodymiumElectricGeneratorsDisplay = new HelixText(UI_PADDING, 0, Translater.get("NEODYMIUM_BUILDINGS", [0]), UI_FONT_SIZE);
 		this.neodymiumElectricGeneratorsDisplay.y = this.height - this.neodymiumElectricGeneratorsDisplay.height - UI_PADDING;
 		
 		// UI: controls/buttons
@@ -163,7 +164,7 @@ class CoreGameState extends HelixState
 			var bought = this.region.buyNeydymiumElectricGenerator();
 			if (bought)
 			{
-				this.neodymiumElectricGeneratorsDisplay.text = 'NEGs: ${this.region.numNeodymiumElectricGenerators}';
+				this.neodymiumElectricGeneratorsDisplay.text = Translater.get("NEODYMIUM_BUILDINGS", [this.region.numNeodymiumElectricGenerators]);
 
 				if (this.mineAlloyManually.alpha == 0 && 
 				!this.earth.player.isDiscovered(Discovery.ManuallyMineAlloy) &&
@@ -186,7 +187,7 @@ class CoreGameState extends HelixState
 		this.energyDisplay.x = this.width - this.energyDisplay.width - UI_PADDING;
 
 
-		this.alloyDisplay.text = 'Alloy: ${Std.int(Math.floor(this.region.numAlloy))}';
-		this.neodymiumDisplay.text = 'Neodymium: ${Std.int(Math.floor(this.region.numNeodymium))}';
+		this.alloyDisplay.text = Translater.get("ALLOY_AMOUNT", [Std.int(Math.floor(this.region.numAlloy))]);
+		this.neodymiumDisplay.text = Translater.get("NEODYMIUM_AMOUNT",  [Std.int(Math.floor(this.region.numNeodymium))]);
 	}
 }

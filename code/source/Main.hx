@@ -11,7 +11,7 @@ class Main extends Sprite
 	{
 		super();
 
-		var localizations = ["en"];
+		var localizations = ["en", "ar"];
 		for (localization in localizations)
 		{
 			Translater.addLanguage(localization, Assets.getText('assets/data/localizations/${localization}.txt'));

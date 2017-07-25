@@ -63,19 +63,19 @@ class CoreGameState extends HelixState
 		var discoveriesData:Dynamic = Config.get("discoveries");
 		
 		// UI: resources
-		this.energyDisplay = new HelixText(0, UI_PADDING, "Energy: 9999", UI_FONT_SIZE);
+		this.energyDisplay = new HelixText(0, UI_PADDING, "", UI_FONT_SIZE);
 
-		this.alloyDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), "Alloy: 9999", UI_FONT_SIZE);
+		this.alloyDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), Translater.get("ALLOY_AMOUNT", [0]), UI_FONT_SIZE);
 		this.alloyDisplay.x = this.width - this.alloyDisplay.width - UI_PADDING;
 
-		this.neodymiumDisplay = new HelixText(0, Std.int(this.alloyDisplay.y + this.alloyDisplay.fontSize + UI_PADDING), "Neodymium: 9999", UI_FONT_SIZE);
+		this.neodymiumDisplay = new HelixText(0, Std.int(this.alloyDisplay.y + this.alloyDisplay.fontSize + UI_PADDING), Translater.get("NEODYMIUM_AMOUNT", [0]), UI_FONT_SIZE);
 		this.neodymiumDisplay.x = this.width - this.neodymiumDisplay.width - UI_PADDING;
 
 		// UI: units
-		this.numAlloyHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, "Alloy Harvesters: 0", UI_FONT_SIZE);
+		this.numAlloyHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("ALLOY_HARVESTERS", [0]), UI_FONT_SIZE);
 		this.numAlloyHarvestersDisplay.alpha = 0;
 
-		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numAlloyHarvestersDisplay.x), Std.int(this.numAlloyHarvestersDisplay.y) + numAlloyHarvestersDisplay.fontSize + UI_PADDING, "NeoD Harvesters: 0", UI_FONT_SIZE);
+		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numAlloyHarvestersDisplay.x), Std.int(this.numAlloyHarvestersDisplay.y) + numAlloyHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [0]), UI_FONT_SIZE);
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings
@@ -83,10 +83,10 @@ class CoreGameState extends HelixState
 		this.neodymiumElectricGeneratorsDisplay.y = this.height - this.neodymiumElectricGeneratorsDisplay.height - UI_PADDING;
 		
 		// UI: controls/buttons
-		this.buyAlloyHarvester = new HelixText(0, 0, "Buy alloy harvester", UI_ACTION_FONT_SIZE);
+		this.buyAlloyHarvester = new HelixText(0, 0, Translater.get("BUY_ALLOY_HARVESTER"), UI_ACTION_FONT_SIZE);
 		this.buyAlloyHarvester.alpha = 0;
 
-		this.mineAlloyManually = new HelixText(UI_PADDING, UI_PADDING, "Mine Alloy", UI_ACTION_FONT_SIZE);
+		this.mineAlloyManually = new HelixText(UI_PADDING, UI_PADDING, Translater.get("MINE_ALLOY"), UI_ACTION_FONT_SIZE);
 		this.mineAlloyManually.alpha = 0;
 		this.mineAlloyManually.onClick(function()
 		{			
@@ -102,7 +102,7 @@ class CoreGameState extends HelixState
 			}
 		});
 
-		this.mineNeodymiumManually = new HelixText(UI_PADDING, Std.int(this.mineAlloyManually.y) + this.mineAlloyManually.fontSize + UI_PADDING, "Mine Neodymium", UI_ACTION_FONT_SIZE);
+		this.mineNeodymiumManually = new HelixText(UI_PADDING, Std.int(this.mineAlloyManually.y) + this.mineAlloyManually.fontSize + UI_PADDING, Translater.get("MINE_NEODYMIUM"), UI_ACTION_FONT_SIZE);
 		this.mineNeodymiumManually.alpha = 0;
 		this.mineNeodymiumManually.onClick(function() {
 			this.region.mineNeodymiumManually();
@@ -124,7 +124,7 @@ class CoreGameState extends HelixState
 			var bought = this.region.buyAlloyHarvester();
 			if (bought)
 			{
-				this.numAlloyHarvestersDisplay.text = 'Alloy harvesters: ${this.region.numAlloyHarvesters}';
+				this.numAlloyHarvestersDisplay.text = Translater.get("ALLOY_HARVESTERS", [this.region.numAlloyHarvesters]);
 				// Play cash sound
 
 				if (this.mineNeodymiumManually.alpha == 0 && 
@@ -141,13 +141,13 @@ class CoreGameState extends HelixState
 			}
 		});
 
-		this.buyNeodymiumHarvester = new HelixText(Std.int(this.buyAlloyHarvester.x), Std.int(this.buyAlloyHarvester.y) + this.buyAlloyHarvester.fontSize + UI_PADDING, "Buy neodymium harvester", UI_ACTION_FONT_SIZE);
+		this.buyNeodymiumHarvester = new HelixText(Std.int(this.buyAlloyHarvester.x), Std.int(this.buyAlloyHarvester.y) + this.buyAlloyHarvester.fontSize + UI_PADDING, Translater.get("BUY_NEODYMIUM_HARVESTER"), UI_ACTION_FONT_SIZE);
 		this.buyNeodymiumHarvester.alpha = 0;
 		this.buyNeodymiumHarvester.onClick(function() {
 			var bought = this.region.buyNeodymiumHarvester();
 			if (bought)
 			{
-				this.numNeodymiumHarvestersDisplay.text = 'NeoD harvesters: ${this.region.numNeodymiumHarvesters}';
+				this.numNeodymiumHarvestersDisplay.text = Translater.get("NEODYMIUM_HARVESTERS", [this.region.numNeodymiumHarvesters]);
 				// Play cash sound			
 			}
 			else
@@ -157,7 +157,7 @@ class CoreGameState extends HelixState
 		});
 
 		// TODO: abbreviate to NEG with a mandatory pop-up expounding what it really is
-		this.buyNeodymiumElectricGenerator = new HelixText(UI_PADDING, 0, "Buy NEG", UI_FONT_SIZE);
+		this.buyNeodymiumElectricGenerator = new HelixText(UI_PADDING, 0, Translater.get("BUY_NEODYMIUM_ELECTRIC_GENERATOR"), UI_FONT_SIZE);
 		this.buyNeodymiumElectricGenerator.y = this.neodymiumElectricGeneratorsDisplay.y - this.neodymiumElectricGeneratorsDisplay.height;
 		this.buyNeodymiumElectricGenerator.onClick(function()
 		{
@@ -183,7 +183,7 @@ class CoreGameState extends HelixState
 
 	private function updateUi():Void
 	{
-		this.energyDisplay.text = 'Energy: ${Std.int(Math.floor(this.region.numEnergy))} (+${this.region.energyGainPerSecond}/s)';
+		this.energyDisplay.text = Translater.get("ENERGY_AMOUNT", [Std.int(Math.floor(this.region.numEnergy)), this.region.energyGainPerSecond]);
 		this.energyDisplay.x = this.width - this.energyDisplay.width - UI_PADDING;
 
 

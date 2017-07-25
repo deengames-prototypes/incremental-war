@@ -1,0 +1,14 @@
+ALLOY_AMOUNT: السبائك: {0}
+NEODYMIUM_AMOUNT: نيوديميوم: {0}
+ENERGY_AMOUNT: الطاقة: {0} ({1} / الثانية)
+
+MINE_ALLOY: منجم سبيكة
+MINE_NEODYMIUM: مين نيوديميوم
+
+NEODYMIUM_BUILDINGS: المولدات الكهربائية النيوديميوم: {0}
+ALLOY_HARVESTERS: حصادات السبائك: {0}
+NEODYMIUM_HARVESTERS: حصادات النيوديميوم: {0}
+
+BUY_ALLOY_HARVESTER: شراء سبيكة حصادة
+BUY_NEODYMIUM_HARVESTER: شراء حصادة النيوديميوم
+BUY_NEODYMIUM_ELECTRIC_GENERATOR: شراء مولد كهربائي النيوديميوم

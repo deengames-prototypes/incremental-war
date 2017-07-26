@@ -1,14 +1,14 @@
-ALLOY_AMOUNT: Alloy: {0}
+POLYMETAL_AMOUNT: Polymetal: {0}
 NEODYMIUM_AMOUNT: Neodymium: {0}
 ENERGY_AMOUNT: Energy: {0} ({1}/s)
 
-MINE_ALLOY: Mine Alloy
+MINE_POLYMETAL: Mine Polymetal
 MINE_NEODYMIUM: Mine Neodymium
 
 NEODYMIUM_BUILDINGS: Neodymium Electric Generators: {0}
-ALLOY_HARVESTERS: Alloy harvesters: {0}
+POLYMETAL_HARVESTERS: Polymetal harvesters: {0}
 NEODYMIUM_HARVESTERS: NeoD harvesters: {0}
 
-BUY_ALLOY_HARVESTER: Buy alloy harvester
+BUY_POLYMETAL_HARVESTER: Buy polymetal harvester
 BUY_NEODYMIUM_HARVESTER: Buy neodymium harvester
 BUY_NEODYMIUM_ELECTRIC_GENERATOR: Buy NEG

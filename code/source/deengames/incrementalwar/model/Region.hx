@@ -6,7 +6,7 @@ import helix.data.Config;
 class Region
 {
     // Resources. Stored as floats but displayed as ints
-    public var numAlloy(default, null):Float = 0;
+    public var numPolymetal(default, null):Float = 0;
     public var numNeodymium(default, null):Float = 0;
     public var numEnergy(default, null):Float = 0;
 
@@ -16,12 +16,12 @@ class Region
     public var numNeodymiumElectricGenerators(default, null):Int = 0;
 
     // Units
-    public var numAlloyHarvesters(default, null):Int = 0;
+    public var numpolymetalHarvesters(default, null):Int = 0;
     public var numNeodymiumHarvesters(default, null):Int = 0;
 
-    public function new(startingAlloy:Int = 0, startingNeodymium:Int = 0)
+    public function new(startingPolymetal:Int = 0, startingNeodymium:Int = 0)
     {
-        this.numAlloy = startingAlloy;
+        this.numPolymetal = startingPolymetal;
         this.numNeodymium = startingNeodymium;
     }
 
@@ -30,13 +30,13 @@ class Region
     {
         var buildingsData:Dynamic = Config.get("buildings");
         var negData:Dynamic = buildingsData.neodymiumElectricGenerator;
-        var alloyCost:Int = negData.alloyCost;
+        var polymetalCost:Int = negData.polymetalCost;
         var neodymiumCost:Int = negData.neodymiumCost;
-        if (numAlloy >= alloyCost  && numNeodymium >= neodymiumCost)
+        if (numPolymetal >= polymetalCost  && numNeodymium >= neodymiumCost)
         {
             // CHA-CHING!
             this.numNeodymiumElectricGenerators++;
-            numAlloy -= alloyCost;
+            numPolymetal -= polymetalCost;
             numNeodymium -= neodymiumCost;
             return true;
         }
@@ -44,15 +44,15 @@ class Region
         return false;
     }
 
-    public function buyAlloyHarvester():Bool
+    public function buyPolymetalHarvester():Bool
     {
         var unitsData:Dynamic = Config.get("units");
-        var alloyCost:Int = unitsData.alloyHarvester.alloyCost;
-        if (numAlloy >= alloyCost)
+        var polymetalCost:Int = unitsData.polymetalHarvester.polymetalCost;
+        if (numPolymetal >= polymetalCost)
         {
             // CHA-CHING!
-            this.numAlloyHarvesters++;
-            numAlloy -= alloyCost;
+            this.numpolymetalHarvesters++;
+            numPolymetal -= polymetalCost;
             return true;
         }
         
@@ -62,13 +62,13 @@ class Region
     public function buyNeodymiumHarvester():Bool
     {
         var unitsData:Dynamic = Config.get("units");
-        var alloyCost:Int = unitsData.neodymiumHarvester.alloyCost;
+        var polymetalCost:Int = unitsData.neodymiumHarvester.polymetalCost;
         var neodymiumCost:Int = unitsData.neodymiumHarvester.neodymiumCost;
-        if (numAlloy >= alloyCost && numNeodymium >= neodymiumCost)
+        if (numPolymetal >= polymetalCost && numNeodymium >= neodymiumCost)
         {
             // CHA-CHING!
             this.numNeodymiumHarvesters++;
-            numAlloy -= alloyCost;
+            numPolymetal -= polymetalCost;
             numNeodymium -= neodymiumCost;
             return true;
         }
@@ -76,10 +76,10 @@ class Region
         return false;
     }
 
-    public function mineAlloyManually():Void
+    public function minePolymetalManually():Void
     {
-        var alloyGained:Int = Config.get("manualAlloyMinedPerClick");
-        this.numAlloy += alloyGained;
+        var polymetalGained:Int = Config.get("manualPolymetalMinedPerClick");
+        this.numPolymetal += polymetalGained;
     }
 
     public function mineNeodymiumManually():Void
@@ -96,8 +96,8 @@ class Region
         var gained:Float = this.energyGainPerSecond;
         this.numEnergy += gained * elapsedSeconds;
 
-        // Update alloy mined
-        this.numAlloy += this.numAlloyHarvesters * unitsConfig.alloyHarvester.alloyMinedPerSecond * elapsedSeconds;
+        // Update polymetal mined
+        this.numPolymetal += this.numpolymetalHarvesters * unitsConfig.polymetalHarvester.polymetalMinedPerSecond * elapsedSeconds;
         // Update neodymium mined
         this.numNeodymium += this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.neodymiumMinedPerSecond * elapsedSeconds;
     }
@@ -112,11 +112,11 @@ class Region
         var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
 
         //// Energy lost per building
-        // Alloy harvesters
-        var alloyHarvesterCost:Float = this.numAlloyHarvesters * unitsConfig.alloyHarvester.energyDrainPerSecond;        
+        // Polymetal harvesters
+        var polymetalHarvesterCost:Float = this.numpolymetalHarvesters * unitsConfig.polymetalHarvester.energyDrainPerSecond;        
         // Neodymium harvesters
         var neodymiumHarvesterCost:Float = this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.energyDrainPerSecond;
 
-        return toReturn - alloyHarvesterCost - neodymiumHarvesterCost;
+        return toReturn - polymetalHarvesterCost - neodymiumHarvesterCost;
     }
 }

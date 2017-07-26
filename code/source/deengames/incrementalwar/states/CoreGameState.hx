@@ -20,20 +20,20 @@ class CoreGameState extends HelixState
 	//// UI elements (display)
 	// resources
 	private var energyDisplay:HelixText;
-	private var alloyDisplay:HelixText;
+	private var polymetalDisplay:HelixText;
 	private var neodymiumDisplay:HelixText;
 	// units
-	private var numAlloyHarvestersDisplay:HelixText;
+	private var numPolymetalHarvestersDisplay:HelixText;
 	private var numNeodymiumHarvestersDisplay:HelixText;
 	// buildings
 	private var neodymiumElectricGeneratorsDisplay:HelixText;
 
 	//// UI elements (control)
 	private var buyNeodymiumElectricGenerator:HelixText;
-	private var mineAlloyManually:HelixText;
+	private var minePolymetalManually:HelixText;
 	private var mineNeodymiumManually:HelixText;
 	// TODO: rename to fit world
-	private var buyAlloyHarvester:HelixText;
+	private var buyPolymetalHarvester:HelixText;
 	private var buyNeodymiumHarvester:HelixText;
 
 	override public function create():Void
@@ -65,17 +65,17 @@ class CoreGameState extends HelixState
 		// UI: resources
 		this.energyDisplay = new HelixText(0, UI_PADDING, "", UI_FONT_SIZE);
 
-		this.alloyDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), Translater.get("ALLOY_AMOUNT", [0]), UI_FONT_SIZE);
-		this.alloyDisplay.x = this.width - this.alloyDisplay.width - UI_PADDING;
+		this.polymetalDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), Translater.get("POLYMETAL_AMOUNT", [0]), UI_FONT_SIZE);
+		this.polymetalDisplay.x = this.width - this.polymetalDisplay.width - UI_PADDING;
 
-		this.neodymiumDisplay = new HelixText(0, Std.int(this.alloyDisplay.y + this.alloyDisplay.fontSize + UI_PADDING), Translater.get("NEODYMIUM_AMOUNT", [0]), UI_FONT_SIZE);
+		this.neodymiumDisplay = new HelixText(0, Std.int(this.polymetalDisplay.y + this.polymetalDisplay.fontSize + UI_PADDING), Translater.get("NEODYMIUM_AMOUNT", [0]), UI_FONT_SIZE);
 		this.neodymiumDisplay.x = this.width - this.neodymiumDisplay.width - UI_PADDING;
 
 		// UI: units
-		this.numAlloyHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("ALLOY_HARVESTERS", [0]), UI_FONT_SIZE);
-		this.numAlloyHarvestersDisplay.alpha = 0;
+		this.numPolymetalHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("POLYMETAL_HARVESTERS", [0]), UI_FONT_SIZE);
+		this.numPolymetalHarvestersDisplay.alpha = 0;
 
-		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numAlloyHarvestersDisplay.x), Std.int(this.numAlloyHarvestersDisplay.y) + numAlloyHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [0]), UI_FONT_SIZE);
+		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numPolymetalHarvestersDisplay.x), Std.int(this.numPolymetalHarvestersDisplay.y) + numPolymetalHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [0]), UI_FONT_SIZE);
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings
@@ -83,26 +83,26 @@ class CoreGameState extends HelixState
 		this.neodymiumElectricGeneratorsDisplay.y = this.height - this.neodymiumElectricGeneratorsDisplay.height - UI_PADDING;
 		
 		// UI: controls/buttons
-		this.buyAlloyHarvester = new HelixText(0, 0, Translater.get("BUY_ALLOY_HARVESTER"), UI_ACTION_FONT_SIZE);
-		this.buyAlloyHarvester.alpha = 0;
+		this.buyPolymetalHarvester = new HelixText(0, 0, Translater.get("BUY_POLYMETAL_HARVESTER"), UI_ACTION_FONT_SIZE);
+		this.buyPolymetalHarvester.alpha = 0;
 
-		this.mineAlloyManually = new HelixText(UI_PADDING, UI_PADDING, Translater.get("MINE_ALLOY"), UI_ACTION_FONT_SIZE);
-		this.mineAlloyManually.alpha = 0;
-		this.mineAlloyManually.onClick(function()
+		this.minePolymetalManually = new HelixText(UI_PADDING, UI_PADDING, Translater.get("MINE_POLYMETAL"), UI_ACTION_FONT_SIZE);
+		this.minePolymetalManually.alpha = 0;
+		this.minePolymetalManually.onClick(function()
 		{			
-			this.region.mineAlloyManually();
+			this.region.minePolymetalManually();
 
-			if (this.buyAlloyHarvester.alpha == 0 && 
-				!this.earth.player.isDiscovered(Discovery.AlloyHarvester) &&
-				 this.region.numAlloy >= discoveriesData.alloyHarvester.alloyCost)
+			if (this.buyPolymetalHarvester.alpha == 0 && 
+				!this.earth.player.isDiscovered(Discovery.PolymetalHarvester) &&
+				 this.region.numPolymetal >= discoveriesData.polymetalHarvester.polymetalCost)
 			{
-				this.earth.player.discover(Discovery.AlloyHarvester);
-				this.buyAlloyHarvester.alpha = 1;
-				this.numAlloyHarvestersDisplay.alpha = 1;
+				this.earth.player.discover(Discovery.PolymetalHarvester);
+				this.buyPolymetalHarvester.alpha = 1;
+				this.numPolymetalHarvestersDisplay.alpha = 1;
 			}
 		});
 
-		this.mineNeodymiumManually = new HelixText(UI_PADDING, Std.int(this.mineAlloyManually.y) + this.mineAlloyManually.fontSize + UI_PADDING, Translater.get("MINE_NEODYMIUM"), UI_ACTION_FONT_SIZE);
+		this.mineNeodymiumManually = new HelixText(UI_PADDING, Std.int(this.minePolymetalManually.y) + this.minePolymetalManually.fontSize + UI_PADDING, Translater.get("MINE_NEODYMIUM"), UI_ACTION_FONT_SIZE);
 		this.mineNeodymiumManually.alpha = 0;
 		this.mineNeodymiumManually.onClick(function() {
 			this.region.mineNeodymiumManually();
@@ -117,19 +117,19 @@ class CoreGameState extends HelixState
 				}
 		});
 
-		this.buyAlloyHarvester.x = (this.width - this.buyAlloyHarvester.width) / 2;
-		this.buyAlloyHarvester.y = mineAlloyManually.y;
-		this.buyAlloyHarvester.onClick(function()
+		this.buyPolymetalHarvester.x = (this.width - this.buyPolymetalHarvester.width) / 2;
+		this.buyPolymetalHarvester.y = minePolymetalManually.y;
+		this.buyPolymetalHarvester.onClick(function()
 		{
-			var bought = this.region.buyAlloyHarvester();
+			var bought = this.region.buyPolymetalHarvester();
 			if (bought)
 			{
-				this.numAlloyHarvestersDisplay.text = Translater.get("ALLOY_HARVESTERS", [this.region.numAlloyHarvesters]);
+				this.numPolymetalHarvestersDisplay.text = Translater.get("POLYMETAL_HARVESTERS", [this.region.numpolymetalHarvesters]);
 				// Play cash sound
 
 				if (this.mineNeodymiumManually.alpha == 0 && 
 				!this.earth.player.isDiscovered(Discovery.ManuallyMineNeodymium) &&
-				 this.region.numAlloyHarvesters >= discoveriesData.mineNeodymium.alloyHarvestersRequired)
+				 this.region.numpolymetalHarvesters >= discoveriesData.mineNeodymium.polymetalHarvestersRequired)
 				{
 					this.earth.player.discover(Discovery.ManuallyMineNeodymium);
 					this.mineNeodymiumManually.alpha = 1;
@@ -141,7 +141,7 @@ class CoreGameState extends HelixState
 			}
 		});
 
-		this.buyNeodymiumHarvester = new HelixText(Std.int(this.buyAlloyHarvester.x), Std.int(this.buyAlloyHarvester.y) + this.buyAlloyHarvester.fontSize + UI_PADDING, Translater.get("BUY_NEODYMIUM_HARVESTER"), UI_ACTION_FONT_SIZE);
+		this.buyNeodymiumHarvester = new HelixText(Std.int(this.buyPolymetalHarvester.x), Std.int(this.buyPolymetalHarvester.y) + this.buyPolymetalHarvester.fontSize + UI_PADDING, Translater.get("BUY_NEODYMIUM_HARVESTER"), UI_ACTION_FONT_SIZE);
 		this.buyNeodymiumHarvester.alpha = 0;
 		this.buyNeodymiumHarvester.onClick(function() {
 			var bought = this.region.buyNeodymiumHarvester();
@@ -166,12 +166,12 @@ class CoreGameState extends HelixState
 			{
 				this.neodymiumElectricGeneratorsDisplay.text = Translater.get("NEODYMIUM_BUILDINGS", [this.region.numNeodymiumElectricGenerators]);
 
-				if (this.mineAlloyManually.alpha == 0 && 
-				!this.earth.player.isDiscovered(Discovery.ManuallyMineAlloy) &&
-				 this.region.energyGainPerSecond >= discoveriesData.mineAlloy.energyPerSecondRequirement)
+				if (this.minePolymetalManually.alpha == 0 && 
+				!this.earth.player.isDiscovered(Discovery.ManuallyminePolymetal) &&
+				 this.region.energyGainPerSecond >= discoveriesData.minePolymetal.energyPerSecondRequirement)
 				{
-					this.earth.player.discover(Discovery.ManuallyMineAlloy);
-					this.mineAlloyManually.alpha = 1;
+					this.earth.player.discover(Discovery.ManuallyminePolymetal);
+					this.minePolymetalManually.alpha = 1;
 				}
 			}
 			else
@@ -187,7 +187,7 @@ class CoreGameState extends HelixState
 		this.energyDisplay.x = this.width - this.energyDisplay.width - UI_PADDING;
 
 
-		this.alloyDisplay.text = Translater.get("ALLOY_AMOUNT", [Std.int(Math.floor(this.region.numAlloy))]);
+		this.polymetalDisplay.text = Translater.get("POLYMETAL_AMOUNT", [Std.int(Math.floor(this.region.numPolymetal))]);
 		this.neodymiumDisplay.text = Translater.get("NEODYMIUM_AMOUNT",  [Std.int(Math.floor(this.region.numNeodymium))]);
 	}
 }

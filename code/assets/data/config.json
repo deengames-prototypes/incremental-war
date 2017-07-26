@@ -1,41 +1,41 @@
 {
     "startingResources": [500, 100],
-    "manualAlloyMinedPerClick": 1,
+    "manualPolymetalMinedPerClick": 1,
     "manualNeodymiumMinedPerClick": 1,
 
     // chronologically listed
     "discoveries": {
-        "alloyHarvester": {
-            "alloyCost": 10
+        "polymetalHarvester": {
+            "polymetalCost": 10
         },
-        "mineAlloy": {
+        "minePolymetal": {
             "energyPerSecondRequirement": 1
         },
         "mineNeodymium": {
-            "alloyHarvestersRequired": 3
+            "polymetalHarvestersRequired": 3
         },
         "neodymiumHarvester": {
             "neodymiumRequired": 10
         }
     },
     
-    // all costs are an array of [alloy, neodymium]
+    // all costs are an array of [polymetal, neodymium]
     "buildings": {        
         "neodymiumElectricGenerator": {
-            "alloyCost": 500,
+            "polymetalCost": 500,
             "neodymiumCost": 100,
             "energyGeneratedPerSecond": 10
         }
     },
 
     "units": {
-        "alloyHarvester": {
-            "alloyCost": 10,
+        "polymetalHarvester": {
+            "polymetalCost": 10,
             "energyDrainPerSecond": 1,
-            "alloyMinedPerSecond": 1
+            "polymetalMinedPerSecond": 1
         },
         "neodymiumHarvester": {
-            "alloyCost": 10,
+            "polymetalCost": 10,
             "neodymiumCost": 10,
             "energyDrainPerSecond": 1,
             "neodymiumMinedPerSecond": 1

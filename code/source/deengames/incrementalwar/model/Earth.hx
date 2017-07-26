@@ -17,10 +17,10 @@ class Earth
         this.regions = new Array<Region>();
 
         var startingCosts:Array<Int> = Config.get("startingResources");
-        var alloy = startingCosts[0];
+        var polymetal = startingCosts[0];
         var neodymium = startingCosts[1];
 
-        this.currentRegion = new Region(alloy, neodymium);
+        this.currentRegion = new Region(polymetal, neodymium);
         this.regions.push(this.currentRegion);
     }
 

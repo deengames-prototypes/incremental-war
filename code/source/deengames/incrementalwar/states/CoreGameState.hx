@@ -10,6 +10,9 @@ import polyglot.Translater;
 
 class CoreGameState extends HelixState
 {
+	// Placeholder indicating an amount of something, in four digits,
+	// eg. 1.1M. Used to pad text fields so they are positioned correctly.
+	private static inline var FOUR_DIGITS_SPACE:String = "XXXX";
 	private static inline var UI_PADDING:Int = 16;
 	private static inline var UI_FONT_SIZE:Int = 16;
 	private static inline var UI_ACTION_FONT_SIZE:Int = 24;
@@ -65,17 +68,17 @@ class CoreGameState extends HelixState
 		// UI: resources
 		this.energyDisplay = new HelixText(0, UI_PADDING, "", UI_FONT_SIZE);
 
-		this.polymetalDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), Translater.get("POLYMETAL_AMOUNT", [0]), UI_FONT_SIZE);
+		this.polymetalDisplay = new HelixText(0, Std.int(this.energyDisplay.y + this.energyDisplay.size + UI_PADDING), Translater.get("POLYMETAL_AMOUNT", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
 		this.polymetalDisplay.x = this.width - this.polymetalDisplay.width - UI_PADDING;
 
-		this.neodymiumDisplay = new HelixText(0, Std.int(this.polymetalDisplay.y + this.polymetalDisplay.fontSize + UI_PADDING), Translater.get("NEODYMIUM_AMOUNT", [0]), UI_FONT_SIZE);
+		this.neodymiumDisplay = new HelixText(0, Std.int(this.polymetalDisplay.y + this.polymetalDisplay.fontSize + UI_PADDING), Translater.get("NEODYMIUM_AMOUNT", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
 		this.neodymiumDisplay.x = this.width - this.neodymiumDisplay.width - UI_PADDING;
 
 		// UI: units
-		this.numPolymetalHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("POLYMETAL_HARVESTERS", [0]), UI_FONT_SIZE);
+		this.numPolymetalHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("POLYMETAL_HARVESTERS", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
 		this.numPolymetalHarvestersDisplay.alpha = 0;
 
-		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numPolymetalHarvestersDisplay.x), Std.int(this.numPolymetalHarvestersDisplay.y) + numPolymetalHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [0]), UI_FONT_SIZE);
+		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numPolymetalHarvestersDisplay.x), Std.int(this.numPolymetalHarvestersDisplay.y) + numPolymetalHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings

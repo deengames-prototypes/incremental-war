@@ -3,6 +3,8 @@ package deengames.incrementalwar.states;
 import deengames.incrementalwar.model.Discovery;
 import deengames.incrementalwar.model.Earth;
 import deengames.incrementalwar.model.Region;
+import flixel.FlxG;
+import flixel.system.FlxSound;
 import helix.core.HelixState;
 import helix.core.HelixText;
 import helix.data.Config;
@@ -13,6 +15,8 @@ class CoreGameState extends HelixState
 	// Placeholder indicating an amount of something, in four digits,
 	// eg. 1.1M. Used to pad text fields so they are positioned correctly.
 	private static inline var FOUR_DIGITS_SPACE:String = "XXXX";
+	// Default building counts, etc. are zero and not updated until you buy
+	private static inline var ZERO_PADDED_FOUR_DIGITS:String = "0   ";
 	private static inline var UI_PADDING:Int = 16;
 	private static inline var UI_FONT_SIZE:Int = 16;
 	private static inline var UI_ACTION_FONT_SIZE:Int = 24;
@@ -35,9 +39,12 @@ class CoreGameState extends HelixState
 	private var buyNeodymiumElectricGenerator:HelixText;
 	private var minePolymetalManually:HelixText;
 	private var mineNeodymiumManually:HelixText;
-	// TODO: rename to fit world
 	private var buyPolymetalHarvester:HelixText;
 	private var buyNeodymiumHarvester:HelixText;
+
+	// Sounds
+	var buySuccessfulSound:FlxSound;
+	var buyFailedSound:FlxSound;
 
 	override public function create():Void
 	{
@@ -52,6 +59,7 @@ class CoreGameState extends HelixState
 		this.region = earth.currentRegion;
 
 		this.createUi();
+		this.loadSounds();
 	}
 
 	override public function update(elapsedSeconds:Float):Void
@@ -75,10 +83,10 @@ class CoreGameState extends HelixState
 		this.neodymiumDisplay.x = this.width - this.neodymiumDisplay.width - UI_PADDING;
 
 		// UI: units
-		this.numPolymetalHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("POLYMETAL_HARVESTERS", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
+		this.numPolymetalHarvestersDisplay = new HelixText(Std.int(this.neodymiumDisplay.x) - UI_PADDING, Std.int(this.neodymiumDisplay.y) + this.neodymiumDisplay.fontSize + 2 * UI_PADDING, Translater.get("POLYMETAL_HARVESTERS", [ZERO_PADDED_FOUR_DIGITS]), UI_FONT_SIZE);
 		this.numPolymetalHarvestersDisplay.alpha = 0;
 
-		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numPolymetalHarvestersDisplay.x), Std.int(this.numPolymetalHarvestersDisplay.y) + numPolymetalHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [FOUR_DIGITS_SPACE]), UI_FONT_SIZE);
+		this.numNeodymiumHarvestersDisplay = new HelixText(Std.int(this.numPolymetalHarvestersDisplay.x), Std.int(this.numPolymetalHarvestersDisplay.y) + numPolymetalHarvestersDisplay.fontSize + UI_PADDING, Translater.get("NEODYMIUM_HARVESTERS", [ZERO_PADDED_FOUR_DIGITS]), UI_FONT_SIZE);
 		this.numNeodymiumHarvestersDisplay.alpha = 0;
 
 		// UI: buildings
@@ -128,7 +136,7 @@ class CoreGameState extends HelixState
 			if (bought)
 			{
 				this.numPolymetalHarvestersDisplay.text = Translater.get("POLYMETAL_HARVESTERS", [this.region.numpolymetalHarvesters]);
-				// Play cash sound
+				this.buySuccessfulSound.play(true);
 
 				if (this.mineNeodymiumManually.alpha == 0 && 
 				!this.earth.player.isDiscovered(Discovery.ManuallyMineNeodymium) &&
@@ -140,7 +148,7 @@ class CoreGameState extends HelixState
 			}
 			else
 			{
-				// Play cancel sound
+				this.buyFailedSound.play(true);
 			}
 		});
 
@@ -151,11 +159,11 @@ class CoreGameState extends HelixState
 			if (bought)
 			{
 				this.numNeodymiumHarvestersDisplay.text = Translater.get("NEODYMIUM_HARVESTERS", [this.region.numNeodymiumHarvesters]);
-				// Play cash sound			
+				this.buySuccessfulSound.play(true);
 			}
 			else
 			{
-				// Play cancel sound
+				this.buyFailedSound.play(true);
 			}
 		});
 
@@ -168,6 +176,7 @@ class CoreGameState extends HelixState
 			if (bought)
 			{
 				this.neodymiumElectricGeneratorsDisplay.text = Translater.get("NEODYMIUM_BUILDINGS", [this.region.numNeodymiumElectricGenerators]);
+				this.buySuccessfulSound.play(true);
 
 				if (this.minePolymetalManually.alpha == 0 && 
 				!this.earth.player.isDiscovered(Discovery.ManuallyminePolymetal) &&
@@ -179,7 +188,7 @@ class CoreGameState extends HelixState
 			}
 			else
 			{
-				// Play cancel sound
+				this.buyFailedSound.play(true);
 			}
 		});
 	}
@@ -192,5 +201,11 @@ class CoreGameState extends HelixState
 
 		this.polymetalDisplay.text = Translater.get("POLYMETAL_AMOUNT", [Std.int(Math.floor(this.region.numPolymetal))]);
 		this.neodymiumDisplay.text = Translater.get("NEODYMIUM_AMOUNT",  [Std.int(Math.floor(this.region.numNeodymium))]);
+	}
+
+	private function loadSounds():Void
+	{
+		this.buySuccessfulSound = FlxG.sound.load("assets/sounds/ui/buy-success.ogg");
+		this.buyFailedSound = FlxG.sound.load("assets/sounds/ui/buy-failed.ogg");
 	}
 }

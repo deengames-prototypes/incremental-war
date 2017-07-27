@@ -45,6 +45,7 @@ class CoreGameState extends HelixState
 	// Sounds
 	var buySuccessfulSound:FlxSound;
 	var buyFailedSound:FlxSound;
+	var newDiscoverySound:FlxSound;
 
 	override public function create():Void
 	{
@@ -108,6 +109,7 @@ class CoreGameState extends HelixState
 				 this.region.numPolymetal >= discoveriesData.polymetalHarvester.polymetalCost)
 			{
 				this.earth.player.discover(Discovery.PolymetalHarvester);
+				this.newDiscoverySound.play(true);
 				this.buyPolymetalHarvester.alpha = 1;
 				this.numPolymetalHarvestersDisplay.alpha = 1;
 			}
@@ -123,6 +125,7 @@ class CoreGameState extends HelixState
 				 this.region.numNeodymium >= discoveriesData.neodymiumHarvester.neodymiumRequired)
 				{
 					this.earth.player.discover(Discovery.NeodymiumHarvester);
+					this.newDiscoverySound.play(true);					
 					this.buyNeodymiumHarvester.alpha = 1;
 					this.numNeodymiumHarvestersDisplay.alpha = 1;
 				}
@@ -143,6 +146,7 @@ class CoreGameState extends HelixState
 				 this.region.numpolymetalHarvesters >= discoveriesData.mineNeodymium.polymetalHarvestersRequired)
 				{
 					this.earth.player.discover(Discovery.ManuallyMineNeodymium);
+					this.newDiscoverySound.play(true);					
 					this.mineNeodymiumManually.alpha = 1;
 				}			
 			}
@@ -183,6 +187,7 @@ class CoreGameState extends HelixState
 				 this.region.energyGainPerSecond >= discoveriesData.minePolymetal.energyPerSecondRequirement)
 				{
 					this.earth.player.discover(Discovery.ManuallyminePolymetal);
+					this.newDiscoverySound.play(true);					
 					this.minePolymetalManually.alpha = 1;
 				}
 			}
@@ -207,5 +212,6 @@ class CoreGameState extends HelixState
 	{
 		this.buySuccessfulSound = FlxG.sound.load("assets/sounds/ui/buy-success.ogg");
 		this.buyFailedSound = FlxG.sound.load("assets/sounds/ui/buy-failed.ogg");
+		this.newDiscoverySound = FlxG.sound.load("assets/sounds/ui/discovery.ogg");
 	}
 }

@@ -95,11 +95,19 @@ class Region
         // Update energy gain/loss
         var gained:Float = this.energyGainPerSecond;
         this.numEnergy += gained * elapsedSeconds;
-
-        // Update polymetal mined
-        this.numPolymetal += this.numpolymetalHarvesters * unitsConfig.polymetalHarvester.polymetalMinedPerSecond * elapsedSeconds;
-        // Update neodymium mined
-        this.numNeodymium += this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.neodymiumMinedPerSecond * elapsedSeconds;
+        
+        if (numEnergy > 0)
+        {
+            // Update polymetal mined
+            this.numPolymetal += this.numpolymetalHarvesters * unitsConfig.polymetalHarvester.polymetalMinedPerSecond * elapsedSeconds;
+            // Update neodymium mined
+            this.numNeodymium += this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.neodymiumMinedPerSecond * elapsedSeconds;
+        }
+        else
+        {
+            // Don't sink into a deep, dark pit; cap at 0.
+            this.numEnergy = 0;
+        }
     }
 
     private function get_energyGainPerSecond():Float
@@ -109,7 +117,7 @@ class Region
         // Energy gain from energy-producing NEGs
         var buildingsData:Dynamic = Config.get("buildings");
         var negEnergyPerSecond:Int = buildingsData.neodymiumElectricGenerator.energyGeneratedPerSecond;        
-        var toReturn = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
+        var amountGenerated = negEnergyPerSecond * this.numNeodymiumElectricGenerators;
 
         //// Energy lost per building
         // Polymetal harvesters
@@ -117,6 +125,6 @@ class Region
         // Neodymium harvesters
         var neodymiumHarvesterCost:Float = this.numNeodymiumHarvesters * unitsConfig.neodymiumHarvester.energyDrainPerSecond;
 
-        return toReturn - polymetalHarvesterCost - neodymiumHarvesterCost;
+        return amountGenerated - polymetalHarvesterCost - neodymiumHarvesterCost;
     }
 }
